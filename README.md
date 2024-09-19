@@ -10,5 +10,5 @@ Project 1:  Simple Password generator (python) , using random module
 
 ## Support
 
-For support, email fake@fake.com or join our Slack channel.
+For support, email adisplash@gmx.com or join our Slack channel.
 
