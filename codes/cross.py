@@ -37,13 +37,14 @@ found.append(["alignment","row","column"])
 
 for i in range(10):
     for j in range(10):
-        cw=''
-        if( ( j + (len(word)-1) ) <= 9 ):
-            cw = cw + db[j][i]
-            for k in range(1,len(word)):
-                cw = cw + db[i][j+k]
-        if( cw.lower() == word.lower() ):
-            found.append(["forward",i,j])
+        cw = ''
+        if (j + (len(word) - 1)) <= 9:
+            cw = cw + db[i][j]  # Corrected row-major indexing
+            for k in range(1, len(word)):
+                cw = cw + db[i][j + k]
+        if cw.lower() == word.lower():
+            found.append(["forward", i, j])
+
             
 
 for i in range(10):
@@ -80,7 +81,7 @@ for i in range(10):
         if( cw.lower() == word.lower() ):
             found.append(["bottom-top",j,i])
 
-
+print(found)
 table = Texttable()
 table.add_rows(found)
 print(table.draw())
