@@ -28,6 +28,14 @@ crossword puzzle game using python , list used as db , for loops used, complete 
 -> error handling present <br>
 -> custom crossword can be added
 
+<h3>PROJECT-5: Battleship CLI game in C++ ( UNDER DEV ) ( /battleship/main.cpp )</h3>
+A CLI version of Battleship game with perfect error handling and menu system   <br><br>
+
+-> Complete menu system  <br>
+-> Error handling and winning conditions <br>
+-> cusotom help page for issues  <br>
+-> for better understanding of functions and array indexing 
+
 ## Support
 
 For support, email adisplash@gmx.com 
