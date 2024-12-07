@@ -33,7 +33,7 @@ A CLI version of Battleship game with perfect error handling and menu system   <
 
 -> Complete menu system  <br>
 -> Error handling and winning conditions <br>
--> cusotom help page for issues  <br>
+-> custom help page for issues  <br>
 -> for better understanding of functions and array indexing 
 
 ## Support
