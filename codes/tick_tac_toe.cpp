@@ -53,7 +53,7 @@ int main(){
             if(game[0][j]!=' ' && game[0][j]==game[1][j] && game[1][j]==game[2][j]) winner= game[0][j];
         }
         if(game[0][0] !=' ' && game[0][0] == game[1][1] && game[1][1]==game[2][2]) winner= game[0][0];
-        if(game[0][2]!=' ' && game[0][2] == game[1][1] && game[1][1] == game[2][2]) winner= game[0][2];
+        if(game[0][2]!=' ' && game[0][2] == game[1][1] && game[1][1] == game[2][0]) winner= game[0][2];
         if(winner !=' '){
             cout<<"  "<<game[0][0]<<" | "<<game[0][1]<<" | "<<game[0][2]<<endl;
             cout<<" -----------"<<endl;
