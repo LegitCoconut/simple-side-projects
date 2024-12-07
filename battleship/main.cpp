@@ -133,7 +133,7 @@ int substart(){
       print_banner();
       cout<<green<<" [1] - START GAME  \n [2] - REPLACE/RE-ORDER SHIPS \n [3] - VIEW MAP \n [4] - RENAME PLAYER \n [5] - BACK TO MAIN MENU \n"<<reset;
       int op2 = 0;
-      cout<<green<<"\n -> ENTER GAME OPTION : "<<reset;
+      cout<<green<<"\n >"<<reset;
       cin>>op2;
       switch(op2) {
         case 1:
@@ -156,7 +156,7 @@ int substart(){
             // view player map
             clear();
             print_banner(); 
-            cout<<green<<" WHICH MAP TO VIEW ? \n [1] - "<<pl1<<"\n [2] - "<<pl2<<"\n ENTER OPTION "<<reset;
+            cout<<green<<" WHICH MAP TO VIEW ? \n [1] - "<<pl1<<"\n [2] - "<<pl2<<"\n > "<<reset;
             cin>>rp;
             cout<<"TELL OTHER PLAYER TO MOVE ! , PRESS ANY KEY TO CONTINUE ..... ";
             cin.ignore();
@@ -199,7 +199,7 @@ int main(){
     clear();
     print_banner();
     int op = 0;
-    cout<<green<<" [1] - START GAME \n [2] - VIEW GAME RULES \n [3] - QUIT GAME \n\n -> ENTER GAME OPTION :"<<reset;
+    cout<<green<<" [1] - START GAME \n [2] - VIEW GAME RULES \n [3] - QUIT GAME \n\n > :"<<reset;
     cin>>op;
     switch(op){
       case 1:
