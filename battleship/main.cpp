@@ -1,22 +1,26 @@
 #include  <iostream>
 #include <string>
 #include <cstdlib>
+#include <windows.h>    // if compiled for windows , windows.h will be compiled
 using namespace std;
 
 
-std::string red = "\033[31m";              // define red color for ascii
-std::string green = "\033[32m";            // define green color for ascii
-std::string yellow = "\033[33m";           // define yellow color for ascii
-std::string reset = "\033[0m";             // reset back to white colour
-void print_banner();                       // print banner function
-void clear();                              // clear screen function 
-char print_map(char ship[10][10]);         // print input map 
-int substart();  
-int main();                       // start game menu function 
+std::string red = "\033[31m";                // define red color for ascii
+std::string green = "\033[32m";              // define green color for ascii
+std::string yellow = "\033[33m";             // define yellow color for ascii
+std::string reset = "\033[0m";               // reset back to white colour
+
+void print_banner();                         // print banner function
+void clear();                                // clear screen function 
+char print_map(char ship[10][10]);           // print input map 
+int substart();                              // substart menu of the game
+void tutorial();                             // print tutorial function 
+int main();                                  // start game menu function 
+string typing(string printlword, int speed); // typing effect function 
 
 
-string pl1 , pl2 ;
-char a1[10][10] ={  //player 1 placed map 
+string pl1="player1" , pl2="player2" ;                          // player name storing variable
+char a1[10][10] ={                          //player 1 placed map 
 
 		{'*','*','*','*','*','*','*','*','*','*'},
 		{'*','*','*','*','*','*','*','*','*','*'},
@@ -30,7 +34,7 @@ char a1[10][10] ={  //player 1 placed map
 		{'*','*','*','*','*','*','*','*','*','*'}
 	};
 
-char a2[10][10]={  // player 1 bombing map 
+char a2[10][10]={                         // player 1 bombing map 
 		{'*','*','*','*','*','*','*','*','*','*'},
 		{'*','*','*','*','*','*','*','*','*','*'},
 		{'*','*','*','*','*','*','*','*','*','*'},
@@ -43,7 +47,7 @@ char a2[10][10]={  // player 1 bombing map
 		{'*','*','*','*','*','*','*','*','*','*'}
 	};
 
-char b1[10][10] ={    // player 2 placed map
+char b1[10][10] ={                        // player 2 placed map
 		{'*','*','*','*','*','*','*','*','*','*'},
 		{'*','*','*','*','*','*','*','*','*','*'},
 		{'*','*','*','*','*','*','*','*','*','*'},
@@ -56,7 +60,7 @@ char b1[10][10] ={    // player 2 placed map
 		{'*','*','*','*','*','*','*','*','*','*'}
 	};
 
-	char b2[10][10] ={       // player 2 bombing map 
+	char b2[10][10] ={                    // player 2 bombing map 
 		{'*','*','*','*','*','*','*','*','*','*'},
     {'*','*','*','*','*','*','*','*','*','*'},
 		{'*','*','*','*','*','*','*','*','*','*'},
@@ -69,7 +73,7 @@ char b1[10][10] ={    // player 2 placed map
 		{'*','*','*','*','*','*','*','*','*','*'}
 	};
 
-void print_banner() {       // print banner function declared 
+void print_banner() {                // print banner function declared 
 cout<<red<< R"(
                                        ,----,       ,----,   ,--,                                                         
                                      ,/   .`|     ,/   .`|,---.'|                                 ,--,        ,-.----.    
@@ -86,16 +90,40 @@ cout<<red<< R"(
       |   :   /  |  | ,'           '---'        '---'     '---'     |   :   .'  `--'---'  ;   : ;--'  ;   |.' |   | :     
       |   | ,'   `--''                                              |   | ,'              |   ,/      '---'   `---'.|     
       `----'                                                        `----'                '---'                 `---`     
-                                  Developed by LegitCoconut ( https://github.com/LegitCoconut )
+                               Developed by LegitCoconut ( https://github.com/LegitCoconut )
 
                             
 )"<<reset;
 }
 
+
 void clear() {    //function used for clearing the screen.
   system("cls");
-  std::cout << "\033[2J\033[H";
-    
+  std::cout << "\033[2J\033[H";    
+}
+
+string typing(string printlword, int speed , int pak){  // function which does the typing effect
+  for(int i=0; printlword[i] != '\0'; i++){
+    cout<<printlword[i];
+    Sleep(speed);
+  }
+  if(pak ==1){
+      cout<<red<<"\n \n press any key to continue ......."<<reset;
+      cin.ignore();
+      cin.get();
+    }
+}
+
+void tutorial(){
+  clear();
+  print_banner();
+  string str[10];
+  str[1] = "\033[32m WELCOME TO BATTLESHIP CLI GAME - READ THE TUTORIAL CORRECTLY \n \n ";
+  str[2] = "EACH PLAYER WILL HAVE A MAP OF 10x10 , WHERE YOU SHOULD PLACE YOUR SHIPS WHEN THE GAME STARTS \n \n ";
+  str[3] = "EACH PLAYER WILL HAVE 5 SHIPS THAT CAN BE PLACED IN THE MAP \033[33m \n  Carrier (5 spaces) ( <==C=> ) \n  Battleship (4 spaces) ( <=B> ) \n  Patrol (3 spaces) ( <P> ) \n  Submarine (3 spaces) ( <S> ) \n  Destroyer ( 2 spaces ) ( <D ) \n ";
+  typing(str[1],25,0);
+  typing(str[2],25,0);
+  typing(str[3],25,1);
 }
 
 char print_map(char ship[10][10]){    // function to print a particular map 
@@ -119,13 +147,15 @@ char print_map(char ship[10][10]){    // function to print a particular map
 int substart(){
   clear();
   print_banner();
-  cout<<yellow<<" NOW , TYPE IN PLAYER-1 NAME : ";
-  cin>>pl1;
-  cout<<" NOW , TYPE IN PLAYER-2 NAME : ";
-  cin>>pl2;
-  cout<<green<<"\n SUCESSFULLY UPDATED NAME OF PLAYERS  \n\n "<<yellow<<" PLAYER 1 : "<<pl1<<"\n  PLAYER 2 : "<<pl2;
-  cin.ignore();
-  cin.get();
+  if(pl1 == "player1" && pl2 == "player2"){ // only ask to change name if it is not chnaged when game starts , for second time rename should be there 
+    cout<<yellow<<" NOW , TYPE IN PLAYER-1 NAME : ";
+    cin>>pl1;
+    cout<<" NOW , TYPE IN PLAYER-2 NAME : ";
+    cin>>pl2;
+    cout<<green<<"\n SUCESSFULLY UPDATED NAME OF PLAYERS  \n\n "<<yellow<<" PLAYER 1 : "<<pl1<<"\n  PLAYER 2 : "<<pl2;
+    cin.ignore();
+    cin.get();
+  }
   
     while(1){
       int rp=0;
@@ -138,18 +168,19 @@ int substart(){
       switch(op2) {
         case 1:
             cout<<yellow<<"GOING TO START GAME , PRESS ANY KEY TO CONTINUE ......"<<reset;
-            cin.ignore();
-            cin.get();
-            // get into place ship function one by one 
             cout<<"not implemented";
+            cin.ignore();
+            cin.get(); 
+           
             break;
     
         case 2:
             //get into specific player to reorder their ships -> completely -> partially 
             cout<<yellow<<"STARTING TO REORDER SHIP , PRESS ANY KEY TO CONTINUE ......"<<reset;
+            cout<<"not implemented";
             cin.ignore();
             cin.get();
-            cout<<"not implemented";
+            
             break;
     
         case 3:
@@ -176,7 +207,7 @@ int substart(){
             cin>>pl1;
             cout<<"ENTER NAME OF PLAYER 2 : ";
             cin>>pl2;
-            cout<<"PLAYER NAME CHANGED SUCSSFULLY \n PLAYER-1 :"<<pl1<<"\n PLAYER-2 :"<<pl2<<"\n press any key to continue"<<reset;
+            cout<<"\n PLAYER NAME CHANGED SUCSSFULLY \n PLAYER-1 :"<<pl1<<"\n PLAYER-2 :"<<pl2<<"\n press any key to continue"<<reset;
             cin.ignore();
             cin.get();
             break;
@@ -199,7 +230,7 @@ int main(){
     clear();
     print_banner();
     int op = 0;
-    cout<<green<<" [1] - START GAME \n [2] - VIEW GAME RULES \n [3] - QUIT GAME \n\n > :"<<reset;
+    cout<<green<<" [1] - START GAME \n [2] - VIEW GAME RULES \n [3] - QUIT GAME \n\n > "<<reset;
     cin>>op;
     switch(op){
       case 1:
@@ -208,12 +239,10 @@ int main(){
         cin.get();
         // go to substart function
         substart();
-        cout<<"returned to main funcrujn";
         break;
     
       case 2:
-        // go to view rule function 
-        cout<<"not implemeted";
+        tutorial();
         break;
     
       case 3:
@@ -221,7 +250,6 @@ int main(){
         return 0;
     
       default:
-        cout<<"INVALID INPUT TRY AGAIN from main function  \n";
         break;
     }
   } 
