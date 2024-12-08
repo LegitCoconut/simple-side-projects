@@ -117,13 +117,11 @@ string typing(string printlword, int speed , int pak){  // function which does t
 void tutorial(){
   clear();
   print_banner();
-  string str[10];
-  str[1] = "\033[32m WELCOME TO BATTLESHIP CLI GAME - READ THE TUTORIAL CORRECTLY \n \n ";
-  str[2] = "EACH PLAYER WILL HAVE A MAP OF 10x10 , WHERE YOU SHOULD PLACE YOUR SHIPS WHEN THE GAME STARTS \n \n ";
-  str[3] = "EACH PLAYER WILL HAVE 5 SHIPS THAT CAN BE PLACED IN THE MAP \033[33m \n  Carrier (5 spaces) ( <==C=> ) \n  Battleship (4 spaces) ( <=B> ) \n  Patrol (3 spaces) ( <P> ) \n  Submarine (3 spaces) ( <S> ) \n  Destroyer ( 2 spaces ) ( <D ) \n ";
-  typing(str[1],25,0);
-  typing(str[2],25,0);
-  typing(str[3],25,1);
+  const string str =  "\033[32m WELCOME TO BATTLESHIP CLI GAME - READ THE TUTORIAL CORRECTLY \n \n EACH PLAYER WILL HAVE A MAP OF 10x10 , WHERE YOU SHOULD PLACE YOUR SHIPS WHEN THE GAME STARTS \n \nEACH PLAYER WILL HAVE 5 SHIPS THAT CAN BE PLACED IN THE MAP \033[33m \n\n  Carrier (5 spaces) ( <==C=> ) \n  Battleship (4 spaces) ( <=B> ) \n  Patrol (3 spaces) ( <P> ) \n  Submarine (3 spaces) ( <S> ) \n  Destroyer ( 2 spaces ) ( <D )\033[0m \n\nFIRST YOU WILL BE PROMPTED TO ENTER PLAYERS NAME , FOLLOWED BT PLACING EACH SHIPS INTO THE MAP \nA MENU WILL APPEAR WHERE YOU CAN REORDER THE SHIP , RENAME PLAYERS AND EXIT BACK TO MAIN MENU \nNOW YOU CAN BOMB EACH OTHERS MAP WITH THE X-Y COORDINATES AND IF ALL BOATS ARE FOUND , THEN THAT PLAYER LOSES. \n";
+  typing(str,25,0);
+  cout<<red<<"\n\n Press any key to continue.....";
+  cin.ignore();
+  cin.get();
 }
 
 char print_map(char ship[10][10]){    // function to print a particular map 
@@ -161,7 +159,8 @@ int substart(){
       int rp=0;
       clear();
       print_banner();
-      cout<<green<<" [1] - START GAME  \n [2] - REPLACE/RE-ORDER SHIPS \n [3] - VIEW MAP \n [4] - RENAME PLAYER \n [5] - BACK TO MAIN MENU \n"<<reset;
+      cout<<yellow<<"PLAYER INFO : \n [PLAYER 1] : "<<pl1<<"\n [PLAYER 2] : "<<pl2<<reset;
+      cout<<green<<"\n\n [1] - START GAME  \n [2] - REPLACE/RE-ORDER SHIPS \n [3] - VIEW MAP \n [4] - RENAME PLAYER \n [5] - BACK TO MAIN MENU \n"<<reset;
       int op2 = 0;
       cout<<green<<"\n >"<<reset;
       cin>>op2;
@@ -194,9 +193,13 @@ int substart(){
             cin.get();
             if(rp==1) print_map(a1);
             if(rp==2) print_map(a2);
-            cout<<"PRESS ANY KEY TO CLEAR DISPLAYED MAP......";
-            cin.ignore();
-            cin.get();
+            cout<<red<<"MAP WILL BR CLEARED IN ";
+            for(int j=5;j>=0;j--) {
+              cout<<".."<<j; 
+              Sleep(1000);
+            }
+            cout<<reset;
+            clear();
             break;
     
         case 4:
