@@ -275,9 +275,9 @@ int main(){
   char initial_tutorial;
   make_map();   // initialsie map
   clear();
-  //showTaskWithProgressBar("Compiling code", 1500);              // some startup animations
-  //showTaskWithProgressBar("Initializing memory", 1000);
-  //showTaskWithProgressBar("Finalizing setup", 1000);
+  showTaskWithProgressBar("Compiling code", 1500);              // some startup animations
+  showTaskWithProgressBar("Initializing memory", 1000);
+  showTaskWithProgressBar("Finalizing setup", 1000);
   
   clear();
   print_banner();
