@@ -77,6 +77,15 @@ string typing(string printlword, int speed , int pak){  // function which does t
     }
 }
 
+void showTaskWithProgressBar(const std::string &task, int duration = 1000, int steps = 20) {
+    std::cout << task << " [";
+    for (int i = 0; i < steps; ++i) {
+        Sleep(duration / steps); // Simulate progress
+        std::cout << "#" << std::flush; // Print progress bar step
+    }
+    std::cout << "] Done!" << std::endl;
+}
+
 void tutorial(){
   clear();
   print_banner();
@@ -251,7 +260,12 @@ int substart(){
 
 
 int main(){
-  make_map();  // initialsie map
+  make_map();   // initialsie map
+  clear();
+  showTaskWithProgressBar("Compiling code", 1500);              // some startup animations
+  showTaskWithProgressBar("Initializing memory", 1000);
+  showTaskWithProgressBar("Finalizing setup", 1000);
+   
   while (1)
   {
     clear();
