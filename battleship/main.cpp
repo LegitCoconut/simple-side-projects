@@ -19,8 +19,8 @@ int main();                                  // start game menu function
 string typing(string printlword, int speed); // typing effect function 
 
 
-string pl1="player1" , pl2="player2" ;                          // player name storing variable
-char a1[10][10] ={                          //player 1 placed map 
+  string pl1="player1" , pl2="player2" ;                          // player name storing variable
+  char a1[10][10] ={                          //player 1 placed map 
 
 		{'*','*','*','*','*','*','*','*','*','*'},
 		{'*','*','*','*','*','*','*','*','*','*'},
@@ -34,7 +34,7 @@ char a1[10][10] ={                          //player 1 placed map
 		{'*','*','*','*','*','*','*','*','*','*'}
 	};
 
-char a2[10][10]={                         // player 1 bombing map 
+  char a2[10][10]={                         // player 1 bombing map 
 		{'*','*','*','*','*','*','*','*','*','*'},
 		{'*','*','*','*','*','*','*','*','*','*'},
 		{'*','*','*','*','*','*','*','*','*','*'},
@@ -47,7 +47,7 @@ char a2[10][10]={                         // player 1 bombing map
 		{'*','*','*','*','*','*','*','*','*','*'}
 	};
 
-char b1[10][10] ={                        // player 2 placed map
+  char b1[10][10] ={                        // player 2 placed map
 		{'*','*','*','*','*','*','*','*','*','*'},
 		{'*','*','*','*','*','*','*','*','*','*'},
 		{'*','*','*','*','*','*','*','*','*','*'},
@@ -117,7 +117,7 @@ string typing(string printlword, int speed , int pak){  // function which does t
 void tutorial(){
   clear();
   print_banner();
-  const string str =  "\033[32m WELCOME TO BATTLESHIP CLI GAME - READ THE TUTORIAL CORRECTLY \n \n EACH PLAYER WILL HAVE A MAP OF 10x10 , WHERE YOU SHOULD PLACE YOUR SHIPS WHEN THE GAME STARTS \n \nEACH PLAYER WILL HAVE 5 SHIPS THAT CAN BE PLACED IN THE MAP \033[33m \n\n  Carrier (5 spaces) ( <==C=> ) \n  Battleship (4 spaces) ( <=B> ) \n  Patrol (3 spaces) ( <P> ) \n  Submarine (3 spaces) ( <S> ) \n  Destroyer ( 2 spaces ) ( <D )\033[0m \n\nFIRST YOU WILL BE PROMPTED TO ENTER PLAYERS NAME , FOLLOWED BT PLACING EACH SHIPS INTO THE MAP \nA MENU WILL APPEAR WHERE YOU CAN REORDER THE SHIP , RENAME PLAYERS AND EXIT BACK TO MAIN MENU \nNOW YOU CAN BOMB EACH OTHERS MAP WITH THE X-Y COORDINATES AND IF ALL BOATS ARE FOUND , THEN THAT PLAYER LOSES. \n";
+  const string str =  "\033[32m WELCOME TO BATTLESHIP CLI GAME - READ THE TUTORIAL CORRECTLY \n \n EACH PLAYER WILL HAVE A MAP OF 10x10 , WHERE YOU SHOULD PLACE YOUR SHIPS WHEN THE GAME STARTS \n \n EACH PLAYER WILL HAVE 5 SHIPS THAT CAN BE PLACED IN THE MAP \033[33m \n\n  Carrier (5 spaces) ( <==C=> ) \n  Battleship (4 spaces) ( <=B> ) \n  Patrol (3 spaces) ( <P> ) \n  Submarine (3 spaces) ( <S> ) \n  Destroyer ( 2 spaces ) ( <D )\033[0m \n\n FIRST YOU WILL BE PROMPTED TO ENTER PLAYERS NAME , FOLLOWED BT PLACING EACH SHIPS INTO THE MAP \n A MENU WILL APPEAR WHERE YOU CAN REORDER THE SHIP , RENAME PLAYERS AND EXIT BACK TO MAIN MENU \n NOW YOU CAN BOMB EACH OTHERS MAP WITH THE X-Y COORDINATES AND IF ALL BOATS ARE FOUND , THEN THAT PLAYER LOSES. \n";
   typing(str,25,0);
   cout<<red<<"\n\n Press any key to continue.....";
   cin.ignore();
@@ -142,6 +142,40 @@ char print_map(char ship[10][10]){    // function to print a particular map
   return 0;
 }
 
+char place_ship(char ship[10][10] , string player){
+  int n=5 , ship_no , x_pos , y_pos;
+  int flag[5]={0,0,0,0,0};
+  int ship_length[5] = {5,4,3,3,2};
+  string ship_name[5] = {" [1] Carrier (5 spaces) ( <==C=> ) \n"," [2] Battleship (4 spaces) ( <=B> ) \n"," [3] Patrol (3 spaces) ( <P> ) \n"," [4] Submarine (3 spaces) ( <S> ) \n"," [5] Destroyer ( 2 spaces ) ( <D )\n"};
+  while(n>0){
+    ship_no =0;
+    x_pos = -1 ; y_pos = -1;
+    clear();
+    print_banner();
+    cout<<green<<"PLAYER -"<<player<<"'S TURN TO PLACE SHIPS IN THE MAP\n\n"<<reset;
+    print_map(ship);
+    cout<<green<<"\n\n AVAILABLE SHIPS : \n"<<reset;
+    if(flag[0] == 0) cout<<ship_name[0];
+    if(flag[1] == 0) cout<<ship_name[1];
+    if(flag[2] == 0) cout<<ship_name[2];
+    if(flag[3] == 0) cout<<ship_name[3];
+    if(flag[4] == 0) cout<<ship_name[4];
+    cout<<"\n ENTER SHIP NO TO PLACE > ";
+    cin>>ship_no;
+    cout<<"\nENTER X POSITION > ";
+    cin>>x_pos;
+    cout<<"ENTER Y POSITION > ";
+    cin>>y_pos;
+    if(x_pos<0 || x_pos>10 || y_pos<0 || y_pos>10) continue;
+    else{
+          // continue from here, check if space is available for placing ship , then start placing 
+    }
+    cin.get();
+    n--;
+  }
+  cin.get();
+}
+
 int substart(){
   clear();
   print_banner();
@@ -153,6 +187,7 @@ int substart(){
     cout<<green<<"\n SUCESSFULLY UPDATED NAME OF PLAYERS  \n\n "<<yellow<<" PLAYER 1 : "<<pl1<<"\n  PLAYER 2 : "<<pl2;
     cin.ignore();
     cin.get();
+    place_ship(a1 , pl1);
   }
   
     while(1){
