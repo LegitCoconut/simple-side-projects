@@ -36,8 +36,8 @@ A CLI version of Battleship game with all functions and menu system   <br><br>
 -> custom help page for issues  <br>
 -> for better understanding of functions and array indexing  <br><br>
 
-**> need to develop a GUI version of the same game
-**> add more advanced features to the game 
+**> need to develop a GUI version of the same game <br>
+**> add more advanced features to the game <br>
 **> add the reorder map function
 
 ## Support
