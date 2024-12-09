@@ -77,7 +77,7 @@ string typing(string printlword, int speed , int pak){  // function which does t
     }
 }
 
-void showTaskWithProgressBar(const std::string &task, int duration = 1000, int steps = 20) {
+void showTaskWithProgressBar(const std::string &task, int duration = 1000, int steps = 20) {   // hhatgpt code !
     std::cout << task << " [";
     for (int i = 0; i < steps; ++i) {
         Sleep(duration / steps); // Simulate progress
@@ -118,7 +118,8 @@ char place_ship(char ship[10][10] , string player){
   int n=5 , ship_no , x_pos , y_pos, mnop;
   int flag[5]={0,0,0,0,0};
   int ship_length[5] = {5,4,3,3,2};
-  string ship_name[5] = {" [1] Carrier (5 spaces) ( <==C=> ) \n"," [2] Battleship (4 spaces) ( <=B> ) \n"," [3] Patrol (3 spaces) ( <P> ) \n"," [4] Submarine (3 spaces) ( <S> ) \n"," [5] Destroyer ( 2 spaces ) ( <D )\n"};
+  string ship_name[5] = {" [1] Carrier (5 spaces) ( <=C=> ) \n"," [2] Battleship (4 spaces) ( <=B> ) \n"," [3] Patrol (3 spaces) ( <P> ) \n"," [4] Submarine (3 spaces) ( <S> ) \n"," [5] Destroyer ( 2 spaces ) ( <D )\n"};
+  string ship_element[5] = {"<=C=>","<=B>","<P>","<S>","<D"};
   while(n>0){
     ship_no =0; mnop =0;
     x_pos = -1 ; y_pos = -1;
@@ -134,43 +135,54 @@ char place_ship(char ship[10][10] , string player){
     if(flag[4] == 0) cout<<ship_name[4];
     cout<<"\n ENTER SHIP NO TO PLACE > ";
     cin>>ship_no;
-    cout<<"\nENTER X POSITION > ";
+    if(ship_no > 5 || ship_no < 0){    // check if ship_no is correct
+      cout<<red<<"\nINVALID SHIP NUMBER, TRY AGAIN"<<reset;
+      Sleep(1000);
+      continue;
+    }
+    cout<<"\n ENTER X POSITION > ";
     cin>>x_pos;
-    cout<<"ENTER Y POSITION > ";
+    cout<<" ENTER Y POSITION > ";
     cin>>y_pos;
+
+    for(int j=0;j<ship_length[ship_no-1]-1;j++){       // already if there is a ship condition 
+      if(ship[x_pos][y_pos+j] != '.') mnop =1;
+    }
     if(x_pos<0 || x_pos>10 || y_pos<0 || y_pos>10) {  // invalid x,y pos input check k
-      cout<<red<<"\nINVALID INPUT , TRY AGAIN"<<reset;
+      cout<<red<<"\n INVALID INPUT , TRY AGAIN"<<reset;
       Sleep(1000);
       continue;
       }
-    if(y_pos + ship_length[ship_no] -1 > 9){    // if ship lenght exceeds the map lenght
-      cout<<red<<"\nSHIP EXCEEDS MAP LENGHT , TRY AGAIN"<<reset;
+    else if(y_pos + ship_length[ship_no-1] -1 > 9){    // if ship lenght exceeds the map lenght
+      cout<<red<<"\n SHIP EXCEEDS MAP LENGHT , TRY AGAIN"<<reset;
       Sleep(1000);
       continue;
     }     
-    for(int j=0;j<ship_length[ship_no]-1;j++){       // already if there is a ship condition 
-      if(ship[x_pos][y_pos+j] != '.') mnop =1;
-    }
-    if(mnop == 1){      // used to get out of the already if there is ship condition              
-      cout<<red<<"\nALREADY SHIP PRESENT, TRY AGAIN"<<reset;
+    
+    else if(mnop == 1){      // used to get out of the already if there is ship condition              
+      cout<<red<<"\n ALREADY SHIP PRESENT, TRY AGAIN"<<reset;
       Sleep(1000);
       continue; 
     }
 
-    //for(int a=0; a<ship_length[ship_no]; a++){     // main function where placing ship take place
-    //  cout<<"main function for placing ship reached";
-    //  Sleep(500);
-    //}
-
-   n--;
-   cout<<"n decresaded";  
-   Sleep(500); 
-    
-  
+    else {          // if all condition fails , then ship is placed
+      for(int i=0;i<ship_length[ship_no-1];i++){
+        ship[x_pos][y_pos+i] = ship_element[ship_no-1][i];
+        }
+    flag[ship_no-1]=1;
+    n--;
+    cout<<yellow<<"SUCESSFULLY PLACED SHIP IN TO MAP"<<reset;  
+    Sleep(750); 
+    }
   }
-  
-  cout<<"function ends";
-  Sleep(100);
+  clear();
+  print_banner();
+  cout<<green<<"PLAYER "<<player<<"FINISHED PLACING SHIPS \n\n"<<reset;
+  print_map(ship);
+  cout<<"\n\n PRESS ANY KEY TO CONTINUE ...... ";
+  cin.ignore();
+  cin.get();
+  return ship[10][10];
 }
 
 int substart(){
@@ -184,8 +196,8 @@ int substart(){
     cout<<green<<"\n SUCESSFULLY UPDATED NAME OF PLAYERS  \n\n "<<yellow<<" PLAYER 1 : "<<pl1<<"\n  PLAYER 2 : "<<pl2;
     cin.ignore();
     cin.get();
-    place_ship(a1 , pl1);
-    place_ship(a2 , pl2);
+    a1[10][10] = place_ship(a1 , pl1);
+    b1[10][10] = place_ship(a2 , pl2);
   }
   
     while(1){
@@ -260,11 +272,18 @@ int substart(){
 
 
 int main(){
+  char initial_tutorial;
   make_map();   // initialsie map
   clear();
-  showTaskWithProgressBar("Compiling code", 1500);              // some startup animations
-  showTaskWithProgressBar("Initializing memory", 1000);
-  showTaskWithProgressBar("Finalizing setup", 1000);
+  //showTaskWithProgressBar("Compiling code", 1500);              // some startup animations
+  //showTaskWithProgressBar("Initializing memory", 1000);
+  //showTaskWithProgressBar("Finalizing setup", 1000);
+  
+  clear();
+  print_banner();
+  cout<<green<<"WANT TO SEE THE TUTORIAL [y/n]"<<reset;
+  cin>>initial_tutorial;
+  if(initial_tutorial == 'y' || initial_tutorial == 'Y') tutorial();
    
   while (1)
   {
