@@ -10,6 +10,7 @@ std::string green = "\033[32m";              // define green color for ascii
 std::string yellow = "\033[33m";             // define yellow color for ascii
 std::string reset = "\033[0m";               // reset back to white colour
 
+void make_map();                             // initialsie all the maps while starting up 
 void print_banner();                         // print banner function
 void clear();                                // clear screen function 
 char print_map(char ship[10][10]);           // print input map 
@@ -20,59 +21,21 @@ string typing(string printlword, int speed); // typing effect function
 
 
   string pl1="player1" , pl2="player2" ;                          // player name storing variable
-  char a1[10][10] ={                          //player 1 placed map 
+  char a1[10][10];                          //player 1 placed map
+  char a2[10][10];                        // player 1 bombing map 
+  char b1[10][10];                        // player 2 placed map
+	char b2[10][10];                    // player 2 bombing map 
 
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','x','x','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'}
-	};
-
-  char a2[10][10]={                         // player 1 bombing map 
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'}
-	};
-
-  char b1[10][10] ={                        // player 2 placed map
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'}
-	};
-
-	char b2[10][10] ={                    // player 2 bombing map 
-		{'*','*','*','*','*','*','*','*','*','*'},
-    {'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'},
-		{'*','*','*','*','*','*','*','*','*','*'}
-	};
-
+void make_map(){              // initialise maps
+  for(int i=0;i<10;i++){
+    for(int j=0;j<10;j++){
+      a1[i][j] ='.';
+      a2[i][j] ='.';
+      b1[i][j] ='.';
+      b2[i][j] ='.';
+    }
+  }
+}
 void print_banner() {                // print banner function declared 
 cout<<red<< R"(
                                        ,----,       ,----,   ,--,                                                         
@@ -130,7 +93,7 @@ char print_map(char ship[10][10]){    // function to print a particular map
   for(int i=0; i<10 ; i++){
     cout<<i<<"-- - ";
     for(int j=0; j<10; j++){
-      if(ship[i][j] != '*'){
+      if(ship[i][j] != '.'){
         cout<<red<<ship[i][j]<<reset<<" "; 
       }
       else{
@@ -143,12 +106,12 @@ char print_map(char ship[10][10]){    // function to print a particular map
 }
 
 char place_ship(char ship[10][10] , string player){
-  int n=5 , ship_no , x_pos , y_pos;
+  int n=5 , ship_no , x_pos , y_pos, mnop;
   int flag[5]={0,0,0,0,0};
   int ship_length[5] = {5,4,3,3,2};
   string ship_name[5] = {" [1] Carrier (5 spaces) ( <==C=> ) \n"," [2] Battleship (4 spaces) ( <=B> ) \n"," [3] Patrol (3 spaces) ( <P> ) \n"," [4] Submarine (3 spaces) ( <S> ) \n"," [5] Destroyer ( 2 spaces ) ( <D )\n"};
   while(n>0){
-    ship_no =0;
+    ship_no =0; mnop =0;
     x_pos = -1 ; y_pos = -1;
     clear();
     print_banner();
@@ -166,14 +129,39 @@ char place_ship(char ship[10][10] , string player){
     cin>>x_pos;
     cout<<"ENTER Y POSITION > ";
     cin>>y_pos;
-    if(x_pos<0 || x_pos>10 || y_pos<0 || y_pos>10) continue;
-    else{
-          // continue from here, check if space is available for placing ship , then start placing 
+    if(x_pos<0 || x_pos>10 || y_pos<0 || y_pos>10) {  // invalid x,y pos input check k
+      cout<<red<<"\nINVALID INPUT , TRY AGAIN"<<reset;
+      Sleep(1000);
+      continue;
+      }
+    if(y_pos + ship_length[ship_no] -1 > 9){    // if ship lenght exceeds the map lenght
+      cout<<red<<"\nSHIP EXCEEDS MAP LENGHT , TRY AGAIN"<<reset;
+      Sleep(1000);
+      continue;
+    }     
+    for(int j=0;j<ship_length[ship_no]-1;j++){       // already if there is a ship condition 
+      if(ship[x_pos][y_pos+j] != '.') mnop =1;
     }
-    cin.get();
-    n--;
+    if(mnop == 1){      // used to get out of the already if there is ship condition              
+      cout<<red<<"\nALREADY SHIP PRESENT, TRY AGAIN"<<reset;
+      Sleep(1000);
+      continue; 
+    }
+
+    //for(int a=0; a<ship_length[ship_no]; a++){     // main function where placing ship take place
+    //  cout<<"main function for placing ship reached";
+    //  Sleep(500);
+    //}
+
+   n--;
+   cout<<"n decresaded";  
+   Sleep(500); 
+    
+  
   }
-  cin.get();
+  
+  cout<<"function ends";
+  Sleep(100);
 }
 
 int substart(){
@@ -188,6 +176,7 @@ int substart(){
     cin.ignore();
     cin.get();
     place_ship(a1 , pl1);
+    place_ship(a2 , pl2);
   }
   
     while(1){
@@ -262,7 +251,7 @@ int substart(){
 
 
 int main(){
-
+  make_map();  // initialsie map
   while (1)
   {
     clear();
