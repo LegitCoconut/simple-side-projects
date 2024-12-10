@@ -18,7 +18,7 @@ int substart();                              // substart menu of the game
 void tutorial();                             // print tutorial function 
 int main();                                  // start game menu function 
 string typing(string printlword, int speed); // typing effect function 
-void bomb_map();                             // main bombing and win checking
+int bomb_map();                             // main bombing and win checking
 
 
   string pl1="player1" , pl2="player2" ;                          // player name storing variable
@@ -87,7 +87,7 @@ void showTaskWithProgressBar(const std::string &task, int duration = 1000, int s
     std::cout << "] Done!" << std::endl;
 }
 
-void tutorial(){
+void tutorial(){    // printing the tutorial for the games
   clear();
   print_banner();
   const string str =  "\033[32m WELCOME TO BATTLESHIP CLI GAME - READ THE TUTORIAL CORRECTLY \n \n EACH PLAYER WILL HAVE A MAP OF 10x10 , WHERE YOU SHOULD PLACE YOUR SHIPS WHEN THE GAME STARTS \n \n EACH PLAYER WILL HAVE 5 SHIPS THAT CAN BE PLACED IN THE MAP \033[33m \n\n  Carrier (5 spaces) ( <==C=> ) \n  Battleship (4 spaces) ( <=B> ) \n  Patrol (3 spaces) ( <P> ) \n  Submarine (3 spaces) ( <S> ) \n  Destroyer ( 2 spaces ) ( <D )\033[0m \n\n FIRST YOU WILL BE PROMPTED TO ENTER PLAYERS NAME , FOLLOWED BT PLACING EACH SHIPS INTO THE MAP \n A MENU WILL APPEAR WHERE YOU CAN REORDER THE SHIP , RENAME PLAYERS AND EXIT BACK TO MAIN MENU \n NOW YOU CAN BOMB EACH OTHERS MAP WITH THE X-Y COORDINATES AND IF ALL BOATS ARE FOUND , THEN THAT PLAYER LOSES. \n";
@@ -141,6 +141,8 @@ char place_ship(char ship[10][10] , string player){      // to place all the shi
       Sleep(1000);
       continue;
     }
+    if(flag[ship_no-1] != 0) continue;   // check if ship is available to place
+
     cout<<"\n ENTER X POSITION > ";
     cin>>x_pos;
     cout<<" ENTER Y POSITION > ";
@@ -167,7 +169,7 @@ char place_ship(char ship[10][10] , string player){      // to place all the shi
     }
 
     else {          // if all condition fails , then ship is placed
-      for(int i=0;i<ship_length[ship_no-1];i++){
+      for(int i=0;i<ship_length[ship_no-1];i++){            // ship is being placed using the for loop here
         ship[x_pos][y_pos+i] = ship_element[ship_no-1][i];
         }
     flag[ship_no-1]=1;
@@ -186,33 +188,89 @@ char place_ship(char ship[10][10] , string player){      // to place all the shi
   return ship[10][10];
 }
 
-void bomb_map(){  // function to start bombing and check winning conditions
+int bomb_map(){  // function to start bombing and check winning conditions
 
-//while(1){
-  clear();
-  print_banner();
+  int remaining_ship[2]={5,5};
+  string current_player;   // use turnary operator to print player name 
+  int player_flag=0;  // to make turnary operator and bomb corrrect players map 
+  int pos[2]={-1,-1};
 
-  // make custom printing code for main pritning function for a neat ui
-          cout<<"         0 1 2 3 4 5 6 7 8 9        SHIPS REMAINING           0 1 2 3 4 5 6 7 8 9 \n";
-  cout<<yellow<<"         | | | | | | | | | |      -------------------         | | | | | | | | | | \n"<<reset;
-  for(int i=0;i<10;i++){
-    cout<<"     "<<i<<yellow<<" - "<<reset;
-    for(int j=0;j<10;j++){        //player 1 map print
-      if(a2[i][j] != '.') cout<<red<<a2[i][j]<<reset<<" ";
-      else cout<<a2[i][j]<<" ";
+  while(1){
+    clear();
+    print_banner();
+    if(player_flag ==0) current_player = pl1;
+    else current_player = pl2;
+    cout<<"\t\t    CURRENT PLAYER   \t\t     SHIPS REMAINING "<<endl;
+    cout<<yellow<<"\t\t  -------------------   \t   -------------------\n"<<reset;
+    cout<<"\t\t       "<<green<<current_player<<"\t\t\t      "<<reset<<yellow<<"[ "<<pl2<<" ] : "<<remaining_ship[0]<<endl;
+    cout<<"\t\t\t\t\t\t      [ "<<pl2<<" ] : "<<remaining_ship[1]<<endl<<endl;
+
+      // make custom printing code for main pritning function for a neat ui
+            cout<<"         0 1 2 3 4 5 6 7 8 9                                     0 1 2 3 4 5 6 7 8 9 \n";
+    cout<<yellow<<"         | | | | | | | | | |                                     | | | | | | | | | | \n"<<reset;
+    for(int i=0;i<10;i++){
+      cout<<"     "<<i<<yellow<<" - "<<reset;
+      for(int j=0;j<10;j++){        //player 1 map print
+        if(a2[i][j] != '.') cout<<red<<a2[i][j]<<reset<<" ";
+        else cout<<a2[i][j]<<" ";
+      }
+      
+      if(i==3) cout<<"\t      GAME OPTIONS "<<"\t";
+      else if(i==4) cout<<yellow<<"\t   ------------------"<<"\t"<<reset;
+      else if(i==5) cout<<yellow<<"\t  [ 11 ] : PAUSE GAME "<<"\t"<<reset;
+      else if(i==6) cout<<yellow<<"\t  [ 22 ] : VIEW TUTORIAL"<<reset;
+      else if(i==7) cout<<yellow<<"\t  [ 33 ] : QUIT GAME  "<<"\t"<<reset;
+
+      else { cout<<"\t\t\t\t"; }
+      cout<<"     "<<i<<yellow<<" - "<<reset;
+      for(int k=0;k<10;k++){        // player 2 map print
+        if(b2[i][k] != '.') cout<<red<<b2[i][k]<<reset<<" ";
+        else cout<<b2[i][k]<<" ";
+      }
+      cout<<"\n";
     }
-    cout<<"\t\t\t\t";
-    cout<<"     "<<i<<yellow<<" - "<<reset;
-    for(int k=0;k<10;k++){        // player 2 map print
-      if(b2[i][k] != '.') cout<<red<<b2[i][k]<<reset<<" ";
-      else cout<<b2[i][k]<<" ";
-    }
-    cout<<"\n";
-  }
-  Sleep(100000);
-//}
+    cout<<"\n ENTER X BOMB POSTION > ";
+    cin>>pos[0];
+    cout<<" ENTER Y BOMB POSTION > ";
+    cin>>pos[1];
 
-};
+    if(pos[0] == 11 || pos[1] == 11 ) return 0;
+    if(pos[0] == 22 || pos[1] == 22 ) { tutorial(); continue; }
+    if(pos[0] == 33 || pos[1] == 33 ) { 
+      // initialise all things into 0 stage and back to sub start , since eerything is zero it will start the game once more
+      // from asking for name and askign to make map once more
+      cout<<"quiting not implemented";
+      Sleep(2000);
+      continue;
+    }
+    if(pos[0] > 9 || pos[1] > 9){
+      cout<<red<<"invalid input , try again ";
+      Sleep(500);
+      continue;
+    }
+
+    if(player_flag == 0 ){
+      if(b1[pos[0]][pos[1]] != '.'){
+        b2[pos[0]][pos[1]] = b1[pos[0]][pos[1]];
+      }
+      else{
+        b2[pos[0]][pos[1]] = '*';
+      }
+      player_flag=1;
+    }
+    else{
+      if(a1[pos[0]][pos[1]] != '.'){
+        a2[pos[0]][pos[1]] = a1[pos[0]][pos[1]];
+      }
+      else{
+        a2[pos[0]][pos[1]] = '*';
+      }
+      player_flag=0;
+    }
+    
+ }
+
+}
 
 int substart(){
   clear();
@@ -226,7 +284,7 @@ int substart(){
     cin.ignore();
     cin.get();
     a1[10][10] = place_ship(a1 , pl1);
-    b1[10][10] = place_ship(a2 , pl2);
+    b1[10][10] = place_ship(b1 , pl2);
   }
   
     while(1){
@@ -241,9 +299,9 @@ int substart(){
       switch(op2) {
         case 1:
             cout<<yellow<<"GOING TO START GAME , PRESS ANY KEY TO CONTINUE ......"<<reset;
-            cout<<"not implemented";
             cin.ignore();
             cin.get(); 
+            bomb_map();   // main function to bomb and check for win
            
             break;
     
@@ -302,11 +360,10 @@ int substart(){
 int main(){
   char initial_tutorial;
   make_map();   // initialsie map
-  bomb_map();   // main function to bomb and check for win
-  clear();
-  showTaskWithProgressBar("Compiling code", 1500);              // some startup animations
-  showTaskWithProgressBar("Initializing memory", 1000);
-  showTaskWithProgressBar("Finalizing setup", 1000);
+  clear();  
+  showTaskWithProgressBar("Compiling code", 500);              // some startup animations
+  showTaskWithProgressBar("Initializing memory", 100);
+  showTaskWithProgressBar("Finalizing setup", 100);
   
   clear();
   print_banner();
@@ -337,7 +394,10 @@ int main(){
       case 3:
         cout<<red<<"EXITING THE GAME ! \n"<<reset;
         return 0;
-    
+
+      case 4:
+        place_ship;
+
       default:
         break;
     }
