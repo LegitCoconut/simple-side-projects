@@ -18,6 +18,7 @@ int substart();                              // substart menu of the game
 void tutorial();                             // print tutorial function 
 int main();                                  // start game menu function 
 string typing(string printlword, int speed); // typing effect function 
+void bomb_map();                             // main bombing and win checking
 
 
   string pl1="player1" , pl2="player2" ;                          // player name storing variable
@@ -36,6 +37,7 @@ void make_map(){              // initialise maps
     }
   }
 }
+
 void print_banner() {                // print banner function declared 
 cout<<red<< R"(
                                        ,----,       ,----,   ,--,                                                         
@@ -58,7 +60,6 @@ cout<<red<< R"(
                             
 )"<<reset;
 }
-
 
 void clear() {    //function used for clearing the screen.
   system("cls");
@@ -114,7 +115,7 @@ char print_map(char ship[10][10]){    // function to print a particular map
   return 0;
 }
 
-char place_ship(char ship[10][10] , string player){
+char place_ship(char ship[10][10] , string player){      // to place all the ships in the main map.
   int n=5 , ship_no , x_pos , y_pos, mnop;
   int flag[5]={0,0,0,0,0};
   int ship_length[5] = {5,4,3,3,2};
@@ -177,13 +178,41 @@ char place_ship(char ship[10][10] , string player){
   }
   clear();
   print_banner();
-  cout<<green<<"PLAYER "<<player<<"FINISHED PLACING SHIPS \n\n"<<reset;
+  cout<<green<<"PLAYER "<<player<<" FINISHED PLACING SHIPS \n\n"<<reset;
   print_map(ship);
   cout<<"\n\n PRESS ANY KEY TO CONTINUE ...... ";
   cin.ignore();
   cin.get();
   return ship[10][10];
 }
+
+void bomb_map(){  // function to start bombing and check winning conditions
+
+//while(1){
+  clear();
+  print_banner();
+
+  // make custom printing code for main pritning function for a neat ui
+          cout<<"         0 1 2 3 4 5 6 7 8 9        SHIPS REMAINING           0 1 2 3 4 5 6 7 8 9 \n";
+  cout<<yellow<<"         | | | | | | | | | |      -------------------         | | | | | | | | | | \n"<<reset;
+  for(int i=0;i<10;i++){
+    cout<<"     "<<i<<yellow<<" - "<<reset;
+    for(int j=0;j<10;j++){        //player 1 map print
+      if(a2[i][j] != '.') cout<<red<<a2[i][j]<<reset<<" ";
+      else cout<<a2[i][j]<<" ";
+    }
+    cout<<"\t\t\t\t";
+    cout<<"     "<<i<<yellow<<" - "<<reset;
+    for(int k=0;k<10;k++){        // player 2 map print
+      if(b2[i][k] != '.') cout<<red<<b2[i][k]<<reset<<" ";
+      else cout<<b2[i][k]<<" ";
+    }
+    cout<<"\n";
+  }
+  Sleep(100000);
+//}
+
+};
 
 int substart(){
   clear();
@@ -270,10 +299,10 @@ int substart(){
   }
 }
 
-
 int main(){
   char initial_tutorial;
   make_map();   // initialsie map
+  bomb_map();   // main function to bomb and check for win
   clear();
   showTaskWithProgressBar("Compiling code", 1500);              // some startup animations
   showTaskWithProgressBar("Initializing memory", 1000);
