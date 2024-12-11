@@ -28,7 +28,7 @@ crossword puzzle game using python , list used as db , for loops used, complete 
 -> error handling present <br>
 -> custom crossword can be added
 
-<h3>PROJECT-5: Battleship CLI game in C++ ( INITIAL RELEASE PUBLISHED ) ( /battleship/main.cpp )</h3>
+<h3>PROJECT-5: Battleship CLI game in C++ ( UNDER DEV ) ( /battleship/main.cpp )</h3>
 A CLI version of Battleship game with all functions and menu system   <br><br>
 
 -> Complete menu system  <br>
