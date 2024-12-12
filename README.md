@@ -42,5 +42,5 @@ A CLI version of Battleship game with all functions and menu system   <br><br>
 
 ## Support
 
-For support, email adisplash@gmx.com 
+For support, email labzmad44@gmail.com 
 
