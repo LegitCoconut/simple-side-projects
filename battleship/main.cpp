@@ -27,6 +27,11 @@ int remainingship(char map[10][10] , int current);    // check for remaining shi
   char a2[10][10];                                    // player 1 bombing map 
   char b1[10][10];                                    // player 2 placed map
 	char b2[10][10];                                    // player 2 bombing map 
+  string ship_element[5] = {"<=C=>","<=B>","<P>","<S>","<D"};
+  int flag_pl1[5]={0,0,0,0,0};
+  int flag_pl2[5]={0,0,0,0,0};
+
+
 
 void make_map(){              // initialise maps
   for(int i=0;i<10;i++){
@@ -121,7 +126,7 @@ char place_ship(char ship[10][10] , string player){      // to place all the shi
   int flag[5]={0,0,0,0,0};
   int ship_length[5] = {5,4,3,3,2};
   string ship_name[5] = {" [1] Carrier (5 spaces) ( <=C=> ) \n"," [2] Battleship (4 spaces) ( <=B> ) \n"," [3] Patrol (3 spaces) ( <P> ) \n"," [4] Submarine (3 spaces) ( <S> ) \n"," [5] Destroyer ( 2 spaces ) ( <D )\n"};
-  string ship_element[5] = {"<=C=>","<=B>","<P>","<S>","<D"};
+
   while(n>0){
     ship_no =0; mnop =0;
     x_pos = -1 ; y_pos = -1;
@@ -190,12 +195,70 @@ char place_ship(char ship[10][10] , string player){      // to place all the shi
 }
 
 int remainingship(char map[10][10] , int current){     // function checks and returns the remaining no of ships
-  
-  current--;
-  return current;
+  int flag[5]={0,0,0,0,0};
 
-}
+  string check;
+  for(int i=0;i<10;i++){
 
+    if(flag[4] == 0){
+      for(int k=0;k<9;k++){
+        check="";
+        check = check + map[i][k] + map[i][k+1];
+        if(check == ship_element[4] ) {
+          current-- ; 
+          flag[4] = 1;
+        }
+      } 
+    }
+    
+    if(flag[3] == 0 ){
+      for(int k=0;k<8;k++){
+        check="";
+        check = check + map[i][k] + map[i][k+1] + map[i][k+2];
+        if(check == ship_element[3] ) {
+          current-- ;
+          flag[3] = 1;
+        }
+      }
+    }
+
+    if(flag[2] == 0 ){
+      for(int k=0;k<8;k++){
+        check="";
+        check = check + map[i][k] + map[i][k+1] + map[i][k+2];
+        if(check == ship_element[2] ) {
+          current-- ;
+          flag[2] = 1 ;
+        }
+      }
+    }
+
+    if(flag[1] == 0){
+      for(int k=0;k<7;k++){
+        check="";
+        check = check + map[i][k] + map[i][k+1] + map[i][k+2] + map[i][k+3];
+        if(check == ship_element[1] ) {
+          current-- ;
+          flag[1] = 1;
+        }
+      }
+    }
+
+    if(flag[0] == 0){    
+      for(int k=0;k<6;k++){
+        check="";
+         check = check + map[i][k] + map[i][k+1] + map[i][k+2] + map[i][k+3] + map[i][k+4];
+         if(check == ship_element[0] ){
+          current--;
+          flag[0] = 1;
+         }
+      }
+    }
+
+  }
+    return current;
+  }
+ 
 int bomb_map(){  // function to start bombing and check winning conditions
 
   int remaining_ship[2]={5,5};
@@ -280,7 +343,15 @@ int bomb_map(){  // function to start bombing and check winning conditions
       remaining_ship[0] = remainingship(a2 , remaining_ship[0]);           // edit remainigship funcion to really check for ships 
     }
 
-    if(remaining_ship[0] == 0 || remaining_ship[1] == 0 ) {      
+    if(remaining_ship[0] == 0 || remaining_ship[1] == 0 ) {  
+      if(remaining_ship[0] == 0) {
+        cout<<"PLAYER 2 WON ";
+        Sleep(2000);
+      }
+      else{
+        cout<<"PLAYER 1 WON";
+        Sleep(2000);
+      }    
       for(int i=0;i<10;i++){                                      // since game ends here , the sub map are reinitialised and went back to 
         for(int j=0;j<10;j++){                                    // substart menu .
           a2[i][j] = '.';
