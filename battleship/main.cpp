@@ -5,27 +5,28 @@
 using namespace std;
 
 
-std::string red = "\033[31m";                // define red color for ascii
-std::string green = "\033[32m";              // define green color for ascii
-std::string yellow = "\033[33m";             // define yellow color for ascii
-std::string reset = "\033[0m";               // reset back to white colour
+std::string red = "\033[31m";                         // define red color for ascii
+std::string green = "\033[32m";                       // define green color for ascii
+std::string yellow = "\033[33m";                      // define yellow color for ascii
+std::string reset = "\033[0m";                        // reset back to white colour
 
-void make_map();                             // initialsie all the maps while starting up 
-void print_banner();                         // print banner function
-void clear();                                // clear screen function 
-char print_map(char ship[10][10]);           // print input map 
-int substart();                              // substart menu of the game
-void tutorial();                             // print tutorial function 
-int main();                                  // start game menu function 
-string typing(string printlword, int speed); // typing effect function 
-int bomb_map();                             // main bombing and win checking
+void make_map();                                      // initialsie all the maps while starting up 
+void print_banner();                                  // print banner function
+void clear();                                         // clear screen function 
+char print_map(char ship[10][10]);                    // print input map 
+int substart();                                       // substart menu of the game
+void tutorial();                                      // print tutorial function 
+int main();                                           // start game menu function 
+string typing(string printlword, int speed);          // typing effect function 
+int bomb_map();                                       // main bombing and win checking
+int remainingship(char map[10][10] , int current);    // check for remaining ships in the sub-map 
 
 
-  string pl1="player1" , pl2="player2" ;                          // player name storing variable
-  char a1[10][10];                          //player 1 placed map
-  char a2[10][10];                        // player 1 bombing map 
-  char b1[10][10];                        // player 2 placed map
-	char b2[10][10];                    // player 2 bombing map 
+  string pl1="player1" , pl2="player2" ;              // player name storing variable
+  char a1[10][10];                                    //player 1 placed map
+  char a2[10][10];                                    // player 1 bombing map 
+  char b1[10][10];                                    // player 2 placed map
+	char b2[10][10];                                    // player 2 bombing map 
 
 void make_map(){              // initialise maps
   for(int i=0;i<10;i++){
@@ -188,6 +189,13 @@ char place_ship(char ship[10][10] , string player){      // to place all the shi
   return ship[10][10];
 }
 
+int remainingship(char map[10][10] , int current){     // function checks and returns the remaining no of ships
+  
+  current--;
+  return current;
+
+}
+
 int bomb_map(){  // function to start bombing and check winning conditions
 
   int remaining_ship[2]={5,5};
@@ -202,7 +210,7 @@ int bomb_map(){  // function to start bombing and check winning conditions
     else current_player = pl2;
     cout<<"\t\t    CURRENT PLAYER   \t\t     SHIPS REMAINING "<<endl;
     cout<<yellow<<"\t\t  -------------------   \t   -------------------\n"<<reset;
-    cout<<"\t\t       "<<green<<current_player<<"\t\t\t      "<<reset<<yellow<<"[ "<<pl2<<" ] : "<<remaining_ship[0]<<endl;
+    cout<<"\t\t       "<<green<<current_player<<"\t\t\t      "<<reset<<yellow<<"[ "<<pl1<<" ] : "<<remaining_ship[0]<<endl;
     cout<<"\t\t\t\t\t\t      [ "<<pl2<<" ] : "<<remaining_ship[1]<<endl<<endl;
 
       // make custom printing code for main pritning function for a neat ui
@@ -234,7 +242,7 @@ int bomb_map(){  // function to start bombing and check winning conditions
     cout<<" ENTER Y BOMB POSTION > ";
     cin>>pos[1];
 
-    if(pos[0] == 11 || pos[1] == 11 ) return 0;
+    if(pos[0] == 11 || pos[1] == 11 ) return 0;                        // check if any menu options have been entered
     if(pos[0] == 22 || pos[1] == 22 ) { tutorial(); continue; }
     if(pos[0] == 33 || pos[1] == 33 ) { 
       // initialise all things into 0 stage and back to sub start , since eerything is zero it will start the game once more
@@ -243,13 +251,13 @@ int bomb_map(){  // function to start bombing and check winning conditions
       Sleep(2000);
       continue;
     }
-    if(pos[0] > 9 || pos[1] > 9){
+    if(pos[0] > 9 || pos[1] > 9){                      //invalid input check 
       cout<<red<<"invalid input , try again ";
       Sleep(500);
       continue;
     }
 
-    if(player_flag == 0 ){
+    if(player_flag == 0 ){                            // player bombing thing and turnary operation 
       if(b1[pos[0]][pos[1]] != '.'){
         b2[pos[0]][pos[1]] = b1[pos[0]][pos[1]];
       }
@@ -257,8 +265,10 @@ int bomb_map(){  // function to start bombing and check winning conditions
         b2[pos[0]][pos[1]] = '*';
       }
       player_flag=1;
+      
+      remaining_ship[1] = remainingship(b2 , remaining_ship[1]);
     }
-    else{
+    else{                                             // player bombing thing and turnary operation 
       if(a1[pos[0]][pos[1]] != '.'){
         a2[pos[0]][pos[1]] = a1[pos[0]][pos[1]];
       }
@@ -266,6 +276,18 @@ int bomb_map(){  // function to start bombing and check winning conditions
         a2[pos[0]][pos[1]] = '*';
       }
       player_flag=0;
+
+      remaining_ship[0] = remainingship(a2 , remaining_ship[0]);           // edit remainigship funcion to really check for ships 
+    }
+
+    if(remaining_ship[0] == 0 || remaining_ship[1] == 0 ) {      
+      for(int i=0;i<10;i++){                                      // since game ends here , the sub map are reinitialised and went back to 
+        for(int j=0;j<10;j++){                                    // substart menu .
+          a2[i][j] = '.';
+          b2[i][j] = '.';
+        }
+      }
+      break;
     }
     
  }
@@ -324,7 +346,7 @@ int substart(){
             cin.ignore();
             cin.get();
             if(rp==1) print_map(a1);
-            if(rp==2) print_map(a2);
+            if(rp==2) print_map(b1);
             cout<<red<<"MAP WILL BR CLEARED IN ";
             for(int j=5;j>=0;j--) {
               cout<<".."<<j; 
