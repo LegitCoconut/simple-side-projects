@@ -4,30 +4,31 @@ This repo is a collection of simple and fun pieces of code that i have made whil
 
 
 
-<h3>PROJECT-5: Battleship CLI game in C++ ( UNDER DEV ) ( /battleship/main.cpp )</h3>
+<h3>PROJECT-5: Battleship CLI game in C++ ( INITIAL RELEASE PUBLISHED ) ( /battleship/main.cpp )</h3>
 A CLI version of Battleship game with all functions and menu system   <br><br>
 
 
 ```bash
 -> Complete menu system 
 -> Error handling and winning conditions
--> custom help page for issues  
--> for better understanding of functions and array indexing  
+-> Custom help page for issues  
+-> For better understanding of functions and array indexing  
 
 TODO FOR FUTURE DEVELOPMENT 
 
--> need to develop a GUI version of the same game 
--> add more advanced features to the game 
--> add the reorder map function
+-> Need to develop a GUI version of the same game 
+-> Error handling for non-integer input
+-> Add more advanced features to the game 
+-> Add the reorder map function
 ```
 
 <h3>PROJECT-4: Crossword puzzle game in python  ( /codes/cross.py )</h3>
 crossword puzzle game using python , list used as db , for loops used, complete error handling  <br><br>
 
 ```bash
--> good for learning array indexing 
--> error handling present 
--> custom crossword can be added
+-> Good for learning array indexing 
+-> Error handling present 
+-> Custom crossword can be added
 ```
 
 
@@ -37,8 +38,8 @@ crossword puzzle game using python , list used as db , for loops used, complete 
 simple hotel booking s/m using dictionary and room types and also checkout menu added <br><br>
 
 ```bash
--> dictionary used as db  
--> for strong foundation in dictionary 
+-> Dictionary used as db  
+-> For strong foundation in dictionary 
 ```
 
 
@@ -46,9 +47,9 @@ simple hotel booking s/m using dictionary and room types and also checkout menu 
 simple two player game tick tack toe written in c++ , has all winning condition , error handling <br><br>
 
 ```bash
--> completely written in C++ ( only basic functions )
--> dynamic code execution  
--> proper error handling
+-> Completely written in C++ ( only basic functions )
+-> Dynamic code execution  
+-> Proper error handling
 ```
 
 
@@ -56,8 +57,8 @@ simple two player game tick tack toe written in c++ , has all winning condition 
 simple password generator using python uses random function and shuffle to maximise the randomness of the password <br><br>
 
 ```bash
--> randomises the password 
--> more secure than human genertate password
+-> Randomises the password 
+-> More secure than human genertate password
 ```
 
 
