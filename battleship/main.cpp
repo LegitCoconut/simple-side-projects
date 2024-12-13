@@ -28,8 +28,8 @@ int remainingship(char map[10][10] , int current);    // check for remaining shi
   char b1[10][10];                                    // player 2 placed map
 	char b2[10][10];                                    // player 2 bombing map 
   string ship_element[5] = {"<=C=>","<=B>","<P>","<S>","<D"};
-  int flag_pl1[5]={0,0,0,0,0};
-  int flag_pl2[5]={0,0,0,0,0};
+  int flag_main[10]={0,0,0,0,0,0,0,0,0,0};
+  
 
 
 
@@ -194,8 +194,22 @@ char place_ship(char ship[10][10] , string player){      // to place all the shi
   return ship[10][10];
 }
 
-int remainingship(char map[10][10] , int current){     // function checks and returns the remaining no of ships
+int remainingship(char map[10][10] , int current , int info){     // function checks and returns the remaining no of ships
   int flag[5]={0,0,0,0,0};
+  if(info ==1){
+    flag[4] = flag_main[4];
+    flag[3] = flag_main[3];
+    flag[2] = flag_main[2];
+    flag[1] = flag_main[1];
+    flag[0] = flag_main[0];
+  }
+  else{
+    flag[4] = flag_main[9];
+    flag[3] = flag_main[8];
+    flag[2] = flag_main[7];
+    flag[1] = flag_main[6];
+    flag[0] = flag_main[5];
+  }
 
   string check;
   for(int i=0;i<10;i++){
@@ -255,6 +269,20 @@ int remainingship(char map[10][10] , int current){     // function checks and re
       }
     }
 
+  }
+  if(info ==1){
+    flag_main[4] = flag[4];
+    flag_main[3] = flag[3];
+    flag_main[2] = flag[2];
+    flag_main[1] = flag[1];
+    flag_main[0] = flag[0];
+  }
+  else{
+    flag_main[9] = flag[4];
+    flag_main[8] = flag[3];
+    flag_main[7] = flag[2];
+    flag_main[6] = flag[1];
+    flag_main[5] = flag[0];
   }
     return current;
   }
@@ -329,7 +357,7 @@ int bomb_map(){  // function to start bombing and check winning conditions
       }
       player_flag=1;
       
-      remaining_ship[1] = remainingship(b2 , remaining_ship[1]);
+      remaining_ship[1] = remainingship(b2 , remaining_ship[1] , 1);
     }
     else{                                             // player bombing thing and turnary operation 
       if(a1[pos[0]][pos[1]] != '.'){
@@ -340,17 +368,19 @@ int bomb_map(){  // function to start bombing and check winning conditions
       }
       player_flag=0;
 
-      remaining_ship[0] = remainingship(a2 , remaining_ship[0]);           // edit remainigship funcion to really check for ships 
+      remaining_ship[0] = remainingship(a2 , remaining_ship[0] , 0);           // edit remainigship funcion to really check for ships 
     }
 
     if(remaining_ship[0] == 0 || remaining_ship[1] == 0 ) {  
       if(remaining_ship[0] == 0) {
-        cout<<"PLAYER 2 WON ";
-        Sleep(2000);
+        cout<<"PLAYER "<<pl2<<" WON ";
+        Sleep(1000);
+        make_map();
       }
       else{
-        cout<<"PLAYER 1 WON";
-        Sleep(2000);
+        cout<<"PLAYER "<<pl1<<" WON";
+        Sleep(1000);
+        make_map();
       }    
       for(int i=0;i<10;i++){                                      // since game ends here , the sub map are reinitialised and went back to 
         for(int j=0;j<10;j++){                                    // substart menu .
@@ -358,6 +388,8 @@ int bomb_map(){  // function to start bombing and check winning conditions
           b2[i][j] = '.';
         }
       }
+      pl1="player1";
+      pl2="player2";
       break;
     }
     
@@ -395,8 +427,7 @@ int substart(){
             cin.ignore();
             cin.get(); 
             bomb_map();   // main function to bomb and check for win
-           
-            break;
+            return 0;
     
         case 2:
             //get into specific player to reorder their ships -> completely -> partially 
