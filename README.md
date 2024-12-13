@@ -61,7 +61,7 @@ simple two player game tick tack toe written in c++ , has all winning condition 
 
 
 <h3>PROJECT-1: Python Password genertator ( /codes/passgen.py )</h3>
-simple password generator using python uses random function and shuffle to maximise the randomness of the password <br><br>
+simple password generator using python uses random function and shuffle to maximise the randomness of the password ( just kidding no AI is even used )<br><br>
 
 ![pass.jpg](https://github.com/LegitCoconut/simple-side-projects/blob/main/banner/pass.jpg) <br>
 
