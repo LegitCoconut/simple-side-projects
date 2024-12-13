@@ -6,7 +6,7 @@ This repo is a collection of simple and fun pieces of code that i have made whil
 
 <h3>PROJECT-5: Battleship CLI game in C++ ( INITIAL RELEASE PUBLISHED ) ( /battleship/main.cpp )</h3>
 A CLI version of Battleship game with all functions and menu system   <br><br>
-![battleship.jpg](banner/battleship.jpg)
+![battleship.jpg](https://github.com/LegitCoconut/simple-side-projects/blob/main/banner/battleship.jpg)
 
 
 
@@ -27,7 +27,7 @@ TODO FOR FUTURE DEVELOPMENT
 
 <h3>PROJECT-4: Crossword puzzle game in python  ( /codes/cross.py )</h3>
 crossword puzzle game using python , list used as db , for loops used, complete error handling  <br><br>
-![cross.jpg](banner/cross.jpg)
+![cross.jpg]https://github.com/LegitCoconut/simple-side-projects/blob/main/banner/cross.jpg)
 
 ```bash
 -> Good for learning array indexing 
