@@ -2,6 +2,16 @@
 #include <iostream>
 using namespace std;
 int main(){
+    cout<< R"(
+    
+  __  .__        __               __                            __                 
+_/  |_|__| ____ |  | __         _/  |______    ____           _/  |_  ____   ____  
+\   __\  |/ ___\|  |/ /  ______ \   __\__  \ _/ ___\   ______ \   __\/  _ \_/ __ \ 
+ |  | |  \  \___|    <  /_____/  |  |  / __ \\  \___  /_____/  |  | (  <_> )  ___/ 
+ |__| |__|\___  >__|_ \          |__| (____  /\___  >          |__|  \____/ \___  >
+              \/     \/                    \/     \/                            \/ 
+              Developed by LegitCoconut (https://github.com/LegitCoconut )
+)";
     cout<<"WELCOME TO TICK TACK TOE GAME "<<endl<<endl;
      char game[3][3]={
         {' ',' ',' '},
